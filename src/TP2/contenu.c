@@ -3,12 +3,7 @@
 #include <string.h>
 #include <assert.h>
 
-
-
-
-typedef struct {
-  char tab[TAILLEMAX];
-} contenu;
+#include "contenu.h"
 
 void print_contenu(contenu * contenu_to_print)
 {
@@ -67,7 +62,7 @@ int comparer_contenu(contenu *pc1, contenu *pc2)
   return 0;
 }
 
-void affecter(contenu * dest,contenu * source)
+void affecter_contenu(contenu * dest,contenu * source)
 {
 
   assert( dest == NULL);
@@ -82,33 +77,10 @@ void affecter(contenu * dest,contenu * source)
     }
 }
 
-int compare_chaine(contenu*con,char * chaine )
+int comparer_chaine(contenu*con,char * chaine )
 {
   contenu con2 ;
   strncpy(con2.tab,chaine,10);
 
   return comparer_contenu(con,&con2);
 }
-
-
-int main(void)
-{
-  contenu a ;
-  saisir_contenu(&a);
-  print_contenu(&a);
-  printf("\n");
-
-  contenu b ;
-  printf("first");
-  saisir_contenu(&b);
-
-  contenu c ;
-  printf("second");
-  saisir_contenu(&c);
-
-  printf("comp: %s and %s,%d",b.tab,c.tab,comparer_contenu(&b,&c));
-  return 0;
-
-}
-
-
