@@ -62,11 +62,11 @@ int comparer_contenu(contenu *pc1, contenu *pc2)
   return 0;
 }
 
-void affecter_contenu(contenu * dest,contenu * source)
+void affecte_contenu(contenu * dest,contenu * source)
 {
 
-  assert( dest == NULL);
-  assert( source == NULL);
+  assert( dest != NULL);
+  assert( source != NULL);
 
   char * pt1 = dest->tab;
   char * pt2 = source->tab;
