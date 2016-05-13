@@ -12,6 +12,17 @@ void push_at_begin(list * list,
 void push_at_begin_d(list * list,
                      char * name, int age);
 
+void push_at_begin_g_b(list * list,
+                       void * data,
+                       int size_of_data);
+
+void push_at_begin_g_f(list * list,
+                       void * data,
+                       int size_of_data,
+                       void(void*,void*) function_copy
+                       );
+
+
 int list_is_empty(list* list_empty_or_not);
 
 data* pull_at_begin(list * list);

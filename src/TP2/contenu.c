@@ -15,19 +15,27 @@ void print_contenu(contenu * contenu_to_print)
     }
 }
 
-
 void saisir_contenu(contenu * contenu_to_remplir)
 {
   char * c =  contenu_to_remplir->tab;
 
-  do
-    {
+  do{
       *(c++) = getchar();
-    } while (*(c-1) != '\n' &&  c < contenu_to_remplir->tab + TAILLEMAX);
+    }while (*(c-1) != '\n' &&  c < contenu_to_remplir->tab + TAILLEMAX);
 
-  *(c-1) = '\0';
+
+  //vide le buffer
+  if(*(c-1) != '\n')
+    {
+      while( '\n' != getchar());
+    }
+  else
+    {
+      *(c-1) = '\0';
+    }
+
+  return;
 }
-
 
 int comparer_contenu(contenu *pc1, contenu *pc2)
 {
@@ -73,9 +81,7 @@ void affecte_contenu(contenu * dest,contenu * source)
 
   while (pt2 != '\0' && pt2 < source->tab + TAILLEMAX)
     {
-      
       *pt1++ = *pt2++;
-      
     }
 }
 

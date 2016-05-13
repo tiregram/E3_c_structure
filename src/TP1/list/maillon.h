@@ -6,14 +6,14 @@
 
 typedef struct maillon
 {
-  data * data;
+  void* data;
   struct maillon *next;
 } maillon;
 
 typedef maillon *list;
 
-maillon * construct_maillon(data* data_to_the_maillon);
-maillon* construct_maillon_d(char * name,int age);
+maillon * construct_maillon(void* data_to_the_maillon,int size_of_data);
+maillon * construct_maillon_d(char * name,int age);
 
 void print_maillon(maillon* maillon_to_print);
 
