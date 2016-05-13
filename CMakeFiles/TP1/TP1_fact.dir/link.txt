@@ -1,1 +1,0 @@
-/usr/bin/cc     CMakeFiles/./TP1/TP1_fact.dir/src/TP1/factoriel.c.o  -o ./TP1/TP1_fact -rdynamic 
