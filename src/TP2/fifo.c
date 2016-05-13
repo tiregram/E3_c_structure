@@ -45,17 +45,23 @@ int defiler_file(fifo* f,contenu * cont)
 
 int enfiler_file(fifo* f,contenu * cont)
 {
+
   struct elem* elem = malloc(sizeof(struct elem));
   contenu* conte = malloc(sizeof(contenu));
   affecte_contenu(conte,cont);
   elem->data = conte;
   elem->prev = NULL;
 
-  f->last->prev = elem;
-  f-> last = elem;
-
   if(f->first== NULL)
-    f->first = f->last;
+    {
+      f->first = elem;
+      f->last  = elem;
+    }
+  else
+    {
+      f->last->prev = elem;
+      f-> last = elem;
+    }
 
   return 0;
 

@@ -73,7 +73,9 @@ void affecte_contenu(contenu * dest,contenu * source)
 
   while (pt2 != '\0' && pt2 < source->tab + TAILLEMAX)
     {
-      *pt1 = *pt2;
+      
+      *pt1++ = *pt2++;
+      
     }
 }
 
