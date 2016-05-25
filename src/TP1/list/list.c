@@ -4,7 +4,6 @@
 
 #include "data.h"
 #include "maillon.h"
-
 #include "list.h"
 
 

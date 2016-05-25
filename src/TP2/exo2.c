@@ -7,7 +7,7 @@
 #include "contenu.h"
 
 int main () {
-    contenu txt;
+  contenu txt;
     fifo * pf = creer_fifo () ;
     for (; ; ) {
           printf (" Ajouter un texte a la file (! pour retirer , * pour finir ) : ") ;
@@ -25,7 +25,7 @@ int main () {
                printf ("\n ") ;
         }
           else {
-               enfiler_file ( pf , & txt ) ;
+            enfiler_file ( pf , & txt ) ;
                afficher_file ( pf ) ;
                printf ("\n ") ;
           }

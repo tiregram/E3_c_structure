@@ -4,6 +4,18 @@
 #ifndef G__LIST__
 #define G__LIST__
 
+#ifndef LIST_OPT_TYPE
+typedef void* LIST_TYPE
+#else
+typedef LIST_OPT_TYPE LIST_TYPE
+#endif
+
+typedef struct maillon
+{
+  LIST_TYPE* data;
+  struct maillon *next;
+} maillon;
+
 void create_list(list* list_to_init);
 
 void push_at_begin(list * list,
