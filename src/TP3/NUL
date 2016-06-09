@@ -1,0 +1,289 @@
+	.file	""
+	.comm	f_malloc, 8, 3
+	.comm	f_free, 8, 3
+	.text
+	.globl	cree_contenu
+	.def	cree_contenu;	.scl	2;	.type	32;	.endef
+	.seh_proc	cree_contenu
+cree_contenu:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	%r8d, 32(%rbp)
+	movl	$16, %ecx
+	call	mon_malloc
+	movq	%rax, -8(%rbp)
+	movq	16(%rbp), %rcx
+	call	strlen
+	addq	$1, %rax
+	movq	%rax, %rcx
+	call	mon_malloc
+	movq	%rax, %rdx
+	movq	-8(%rbp), %rax
+	movq	%rdx, (%rax)
+	movq	-8(%rbp), %rax
+	movq	(%rax), %rax
+	movq	16(%rbp), %rdx
+	movq	%rax, %rcx
+	call	strcpy
+	movq	-8(%rbp), %rax
+	movl	24(%rbp), %edx
+	movl	%edx, 8(%rax)
+	movq	-8(%rbp), %rax
+	movl	32(%rbp), %edx
+	movl	%edx, 12(%rax)
+	movq	-8(%rbp), %rax
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	cree_alea_contenu
+	.def	cree_alea_contenu;	.scl	2;	.type	32;	.endef
+	.seh_proc	cree_alea_contenu
+cree_alea_contenu:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$64, %rsp
+	.seh_stackalloc	64
+	.seh_endprologue
+	movabsq	$499984261490, %rax
+	movq	%rax, -32(%rbp)
+	movw	$0, -24(%rbp)
+	movb	$0, -22(%rbp)
+	call	rand
+	movl	%eax, %ecx
+	movl	$-1851608123, %edx
+	movl	%ecx, %eax
+	imull	%edx
+	leal	(%rdx,%rcx), %eax
+	sarl	$9, %eax
+	movl	%eax, %edx
+	movl	%ecx, %eax
+	sarl	$31, %eax
+	subl	%eax, %edx
+	movl	%edx, %eax
+	imull	$900, %eax, %eax
+	subl	%eax, %ecx
+	movl	%ecx, %eax
+	addl	$1000, %eax
+	movl	%eax, -4(%rbp)
+	call	rand
+	movl	%eax, %ecx
+	movl	$156180629, %edx
+	movl	%ecx, %eax
+	imull	%edx
+	sarl	$2, %edx
+	movl	%ecx, %eax
+	sarl	$31, %eax
+	subl	%eax, %edx
+	movl	%edx, %eax
+	imull	$110, %eax, %eax
+	subl	%eax, %ecx
+	movl	%ecx, %eax
+	movl	-4(%rbp), %edx
+	addl	%edx, %eax
+	movl	%eax, -8(%rbp)
+	movl	-8(%rbp), %ecx
+	movl	-4(%rbp), %edx
+	leaq	-32(%rbp), %rax
+	movl	%ecx, %r8d
+	movq	%rax, %rcx
+	call	cree_contenu
+	addq	$64, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+.LC0:
+	.ascii "%-*s (%4d)  (%4d)\0"
+	.text
+	.globl	affiche_contenu
+	.def	affiche_contenu;	.scl	2;	.type	32;	.endef
+	.seh_proc	affiche_contenu
+affiche_contenu:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rax
+	movl	12(%rax), %eax
+	movq	16(%rbp), %rdx
+	movl	8(%rdx), %ecx
+	movq	16(%rbp), %rdx
+	movq	(%rdx), %rdx
+	movl	%eax, 32(%rsp)
+	movl	%ecx, %r9d
+	movq	%rdx, %r8
+	movl	$10, %edx
+	leaq	.LC0(%rip), %rcx
+	call	printf
+	nop
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	libere_contenu
+	.def	libere_contenu;	.scl	2;	.type	32;	.endef
+	.seh_proc	libere_contenu
+libere_contenu:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rcx
+	call	mon_free
+	movq	16(%rbp), %rcx
+	call	mon_free
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	compare_contenu
+	.def	compare_contenu;	.scl	2;	.type	32;	.endef
+	.seh_proc	compare_contenu
+compare_contenu:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	24(%rbp), %rax
+	movq	(%rax), %rdx
+	movq	16(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rcx
+	call	strcmp
+	movl	%eax, -4(%rbp)
+	cmpl	$0, -4(%rbp)
+	je	.L8
+	movl	-4(%rbp), %eax
+	jmp	.L9
+.L8:
+	movq	16(%rbp), %rax
+	movl	8(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	8(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L10
+	movq	16(%rbp), %rax
+	movl	8(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	8(%rax), %eax
+	cmpl	%eax, %edx
+	setb	%al
+	movzbl	%al, %eax
+	jmp	.L9
+.L10:
+	movq	16(%rbp), %rax
+	movl	12(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	12(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L11
+	movq	16(%rbp), %rax
+	movl	12(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	12(%rax), %eax
+	cmpl	%eax, %edx
+	setb	%al
+	movzbl	%al, %eax
+	jmp	.L9
+.L11:
+	movl	$0, %eax
+.L9:
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	compare_valeur
+	.def	compare_valeur;	.scl	2;	.type	32;	.endef
+	.seh_proc	compare_valeur
+compare_valeur:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	24(%rbp), %rax
+	movq	(%rax), %rdx
+	movq	16(%rbp), %rax
+	movq	(%rax), %rax
+	movq	%rax, %rcx
+	call	strcmp
+	movl	%eax, -4(%rbp)
+	movq	16(%rbp), %rax
+	movl	8(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	8(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L13
+	movq	16(%rbp), %rax
+	movl	8(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	8(%rax), %eax
+	cmpl	%eax, %edx
+	setb	%al
+	movzbl	%al, %eax
+	jmp	.L14
+.L13:
+	movq	16(%rbp), %rax
+	movl	12(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	12(%rax), %eax
+	cmpl	%eax, %edx
+	je	.L15
+	movq	16(%rbp), %rax
+	movl	12(%rax), %edx
+	movq	24(%rbp), %rax
+	movl	12(%rax), %eax
+	cmpl	%eax, %edx
+	setb	%al
+	movzbl	%al, %eax
+	jmp	.L14
+.L15:
+	cmpl	$0, -4(%rbp)
+	je	.L16
+	movl	-4(%rbp), %eax
+	jmp	.L14
+.L16:
+	movl	$0, %eax
+.L14:
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (GNU) 5.3.0"
+	.def	mon_malloc;	.scl	2;	.type	32;	.endef
+	.def	strlen;	.scl	2;	.type	32;	.endef
+	.def	strcpy;	.scl	2;	.type	32;	.endef
+	.def	rand;	.scl	2;	.type	32;	.endef
+	.def	printf;	.scl	2;	.type	32;	.endef
+	.def	mon_free;	.scl	2;	.type	32;	.endef
+	.def	strcmp;	.scl	2;	.type	32;	.endef

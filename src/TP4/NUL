@@ -1,0 +1,339 @@
+	.file	""
+	.comm	f_malloc, 8, 3
+	.comm	f_free, 8, 3
+	.text
+	.globl	cree_arbre
+	.def	cree_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	cree_arbre
+cree_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movl	$24, %ecx
+	call	malloc
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	$0, 8(%rax)
+	movq	-8(%rbp), %rax
+	movq	$0, 16(%rax)
+	movq	-8(%rbp), %rax
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	est_vide_arbre
+	.def	est_vide_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	est_vide_arbre
+est_vide_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	cmpq	$0, 16(%rbp)
+	jne	.L4
+	movl	$1, %eax
+	jmp	.L5
+.L4:
+	movl	$0, %eax
+.L5:
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+.LC0:
+	.ascii "insert\0"
+	.text
+	.globl	insere_arbre
+	.def	insere_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	insere_arbre
+insere_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	%r8, 32(%rbp)
+	leaq	.LC0(%rip), %rcx
+	call	puts
+	call	cree_arbre
+	movq	%rax, -8(%rbp)
+	movq	-8(%rbp), %rax
+	movq	24(%rbp), %rdx
+	movq	%rdx, (%rax)
+	movq	-8(%rbp), %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rcx
+	call	accroche_gauche
+	nop
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	libere_arbre
+	.def	libere_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	libere_arbre
+libere_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	16(%rbp), %rcx
+	call	arbre_gauche
+	movq	%rax, %rcx
+	movq	24(%rbp), %rax
+	movq	%rax, %rdx
+	call	libere_arbre
+	movq	16(%rbp), %rcx
+	call	arbre_droite
+	movq	%rax, %rcx
+	movq	24(%rbp), %rax
+	movq	%rax, %rdx
+	call	libere_arbre
+	movq	16(%rbp), %rax
+	movq	(%rax), %rdx
+	movq	24(%rbp), %rax
+	movq	%rdx, %rcx
+	call	*%rax
+	movq	16(%rbp), %rcx
+	call	free
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+.LC1:
+	.ascii "%*c\0"
+.LC2:
+	.ascii "\342\206\263\0"
+.LC3:
+	.ascii "\342\206\261\0"
+	.text
+	.globl	affiche_arbre_rec
+	.def	affiche_arbre_rec;	.scl	2;	.type	32;	.endef
+	.seh_proc	affiche_arbre_rec
+affiche_arbre_rec:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movl	%r8d, 32(%rbp)
+	movq	16(%rbp), %rcx
+	call	arbre_have_gauche
+	testl	%eax, %eax
+	je	.L9
+	movl	32(%rbp), %eax
+	movl	$32, %r8d
+	movl	%eax, %edx
+	leaq	.LC1(%rip), %rcx
+	call	printf
+	leaq	.LC2(%rip), %rcx
+	call	printf
+	movq	16(%rbp), %rcx
+	call	arbre_gauche
+	movq	%rax, %rcx
+	movl	32(%rbp), %edx
+	movq	24(%rbp), %rax
+	movl	%edx, %r8d
+	movq	%rax, %rdx
+	call	affiche_arbre_rec
+.L9:
+	movq	24(%rbp), %rax
+	movq	16(%rbp), %rcx
+	call	*%rax
+	movq	16(%rbp), %rcx
+	call	arbre_have_droite
+	testl	%eax, %eax
+	je	.L11
+	movl	32(%rbp), %eax
+	movl	$32, %r8d
+	movl	%eax, %edx
+	leaq	.LC1(%rip), %rcx
+	call	printf
+	leaq	.LC3(%rip), %rcx
+	call	printf
+	movq	16(%rbp), %rcx
+	call	arbre_droite
+	movq	%rax, %rcx
+	movl	32(%rbp), %edx
+	movq	24(%rbp), %rax
+	movl	%edx, %r8d
+	movq	%rax, %rdx
+	call	affiche_arbre_rec
+.L11:
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	affiche_arbre
+	.def	affiche_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	affiche_arbre
+affiche_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	24(%rbp), %rax
+	movl	$0, %r8d
+	movq	%rax, %rdx
+	movq	16(%rbp), %rcx
+	call	affiche_arbre_rec
+	nop
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	accroche_gauche
+	.def	accroche_gauche;	.scl	2;	.type	32;	.endef
+	.seh_proc	accroche_gauche
+accroche_gauche:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	16(%rbp), %rax
+	movq	24(%rbp), %rdx
+	movq	%rdx, 8(%rax)
+	nop
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	accroche_droite
+	.def	accroche_droite;	.scl	2;	.type	32;	.endef
+	.seh_proc	accroche_droite
+accroche_droite:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	%rdx, 24(%rbp)
+	movq	16(%rbp), %rax
+	movq	24(%rbp), %rdx
+	movq	%rdx, 16(%rax)
+	nop
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	arbre_gauche
+	.def	arbre_gauche;	.scl	2;	.type	32;	.endef
+	.seh_proc	arbre_gauche
+arbre_gauche:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rax
+	movq	8(%rax), %rax
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	arbre_droite
+	.def	arbre_droite;	.scl	2;	.type	32;	.endef
+	.seh_proc	arbre_droite
+arbre_droite:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rax
+	movq	16(%rax), %rax
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	arbre_have_droite
+	.def	arbre_have_droite;	.scl	2;	.type	32;	.endef
+	.seh_proc	arbre_have_droite
+arbre_have_droite:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rcx
+	call	arbre_droite
+	testq	%rax, %rax
+	setne	%al
+	movzbl	%al, %eax
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	arbre_have_gauche
+	.def	arbre_have_gauche;	.scl	2;	.type	32;	.endef
+	.seh_proc	arbre_have_gauche
+arbre_have_gauche:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$32, %rsp
+	.seh_stackalloc	32
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rcx
+	call	arbre_gauche
+	testq	%rax, %rax
+	setne	%al
+	movzbl	%al, %eax
+	addq	$32, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	contenu_arbre
+	.def	contenu_arbre;	.scl	2;	.type	32;	.endef
+	.seh_proc	contenu_arbre
+contenu_arbre:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movq	16(%rbp), %rax
+	movq	(%rax), %rax
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (GNU) 5.3.0"
+	.def	malloc;	.scl	2;	.type	32;	.endef
+	.def	puts;	.scl	2;	.type	32;	.endef
+	.def	free;	.scl	2;	.type	32;	.endef
+	.def	printf;	.scl	2;	.type	32;	.endef

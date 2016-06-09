@@ -23,9 +23,9 @@ contenu * cree_contenu(char *nom,unsigned int birth,unsigned int died ) {
 
 #define N 10
 contenu * cree_alea_contenu() {
-  char nom[N+1];
+  char nom[N+1]="rabit";
   int birth,died;
-
+  
   birth = rand()%900 +1000;
   died  = birth + rand()%110;
 
@@ -34,6 +34,7 @@ contenu * cree_alea_contenu() {
 
 
 void affiche_contenu(contenu *pc){
+  
   printf("%-*s (%4d)  (%4d)",N,pc->nom, pc->birth,pc->died);
 }
 
